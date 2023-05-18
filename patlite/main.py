@@ -18,43 +18,43 @@ class PatLight(Node):
         self.status = 0
         self.flash = 0
 
-        self.ser.write("relay off 1\n\r")
-        self.ser.write("relay off 2\n\r")
-        self.ser.write("relay on 0\n\r")
+        self.ser.write(str.encode("relay off 1\n\r"))
+        self.ser.write(str.encode("relay off 2\n\r"))
+        self.ser.write(str.encode("relay on 0\n\r"))
         timer_period = 1  # seconds
         self.timer = self.create_timer(timer_period, self.timer_callback)
 
     def listener_callback(self, msg):
         if self.status != PWM and msg == PWM:
             self.status = PWM
-            self.ser.write("relay off 1\n\r")
-            self.ser.write("relay off 2\n\r")
-            self.ser.write("relay on 0\n\r")
+            self.ser.write(str.encode("relay off 1\n\r"))
+            self.ser.write(str.encode("relay off 2\n\r"))
+            self.ser.write(str.encode("relay on 0\n\r"))
         elif self.status != AUTO and msg == AUTO:
             self.status = AUTO
-            self.ser.write("relay off 0\n\r")
-            self.ser.write("relay off 2\n\r")
-            self.ser.write("relay on 1\n\r")
+            self.ser.write(str.encode("relay off 0\n\r"))
+            self.ser.write(str.encode("relay off 2\n\r"))
+            self.ser.write(str.encode("relay on 1\n\r"))
         elif self.status != MANUAL and msg == MANUAL:
             self.status = MANUAL
-            self.ser.write("relay off 1\n\r")
-            self.ser.write("relay off 0\n\r")
-            self.ser.write("relay on 2\n\r")
+            self.ser.write(str.encode("relay off 1\n\r"))
+            self.ser.write(str.encode("relay off 0\n\r"))
+            self.ser.write(str.encode("relay on 2\n\r"))
 
     def timer_callback(self):
         if self.flash == 1:
             if self.status == PWM:
-                self.ser.write("relay off 0\n\r")
+                self.ser.write(str.encode("relay off 0\n\r"))
                 time.sleep(0.5)
-                self.ser.write("relay on 0\n\r")
+                self.ser.write(str.encode("relay on 0\n\r"))
             elif self.status == AUTO:
-                self.ser.write("relay off 1\n\r")
+                self.ser.write(str.encode("relay off 1\n\r"))
                 time.sleep(0.5)
-                self.ser.write("relay on 1\n\r")
+                self.ser.write(str.encode("relay on 1\n\r"))
             elif self.status == MANUAL:
-                self.ser.write("relay off 2\n\r")
+                self.ser.write(str.encode("relay off 2\n\r"))
                 time.sleep(0.5)
-                self.ser.write("relay on 2\n\r")
+                self.ser.write(str.encode("relay on 2\n\r"))
         
 
 def main(args=None):
