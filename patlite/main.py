@@ -22,7 +22,7 @@ class PatLight(Node):
         self.ser.write(str.encode("relay off 1\n\r"))
         self.ser.write(str.encode("relay off 2\n\r"))
         self.ser.write(str.encode("relay on 0\n\r"))
-        timer_period = 1  # seconds
+        timer_period = 2  # seconds
         self.timer = self.create_timer(timer_period, self.timer_callback)
 
     def __del__(self):
@@ -56,15 +56,15 @@ class PatLight(Node):
         if self.flash == 1:
             if self.status == PWM:
                 self.ser.write(str.encode("relay off 0\n\r"))
-                time.sleep(0.5)
+                time.sleep(1)
                 self.ser.write(str.encode("relay on 0\n\r"))
             elif self.status == AUTO:
                 self.ser.write(str.encode("relay off 1\n\r"))
-                time.sleep(0.5)
+                time.sleep(1)
                 self.ser.write(str.encode("relay on 1\n\r"))
             elif self.status == MANUAL:
                 self.ser.write(str.encode("relay off 2\n\r"))
-                time.sleep(0.5)
+                time.sleep(1)
                 self.ser.write(str.encode("relay on 2\n\r"))
         
 
