@@ -24,6 +24,12 @@ class PatLight(Node):
         timer_period = 1  # seconds
         self.timer = self.create_timer(timer_period, self.timer_callback)
 
+    def __del__(self):
+        self.ser.write(str.encode("relay off 1\n\r"))
+        self.ser.write(str.encode("relay off 2\n\r"))
+        self.ser.write(str.encode("relay off 0\n\r"))
+        self.ser.close()
+
     def listener_callback(self, msg):
         if self.status != PWM and msg == PWM:
             self.status = PWM
